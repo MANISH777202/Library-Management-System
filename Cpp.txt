@@ -1,0 +1,108 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+// Book class
+class Book {
+public:
+    string title;
+    string author;
+    string publisher;
+    int year;
+    int stock;
+    
+    Book(string t, string a, string p, int y, int s) {
+        title = t;
+        author = a;
+        publisher = p;
+        year = y;
+        stock = s;
+    }
+};
+
+// Library class
+class Library {
+public:
+    vector<Book> books;
+    
+    // Add a book to the library
+    void addBook(string title, string author, string publisher, int year, int stock) {
+        Book book(title, author, publisher, year, stock);
+        books.push_back(book);
+    }
+    
+    // Search for a book by title
+    void searchBook(string title) {
+        bool found = false;
+        for (int i = 0; i < books.size(); i++) {
+            if (books[i].title == title) {
+                cout << "Title: " << books[i].title << endl;
+                cout << "Author: " << books[i].author << endl;
+                cout << "Publisher: " << books[i].publisher << endl;
+                cout << "Year: " << books[i].year << endl;
+                cout << "Stock: " << books[i].stock << endl;
+                found = true;
+            }
+        }
+        if (!found) {
+            cout << "Book not found." << endl;
+        }
+    }
+    
+    // Borrow a book
+    void borrowBook(string title) {
+        bool found = false;
+        for (int i = 0; i < books.size(); i++) {
+            if (books[i].title == title) {
+                if (books[i].stock > 0) {
+                    books[i].stock--;
+                    cout << "Book borrowed successfully." << endl;
+                } else {
+                    cout << "Book not available." << endl;
+                }
+                found = true;
+            }
+        }
+        if (!found) {
+            cout << "Book not found." << endl;
+        }
+    }
+    
+    // Return a book
+    void returnBook(string title) {
+        bool found = false;
+        for (int i = 0; i < books.size(); i++) {
+            if (books[i].title == title) {
+                books[i].stock++;
+                cout << "Book returned successfully." << endl;
+                found = true;
+            }
+        }
+        if (!found) {
+            cout << "Book not found." << endl;
+        }
+    }
+};
+
+// Main function
+int main() {
+    Library library;
+    
+    // Add some books to the library
+    library.addBook("The Great Gatsby", "F. Scott Fitzgerald", "Scribner", 1925, 5);
+    library.addBook("To Kill a Mockingbird", "Harper Lee", "J. B. Lippincott & Co.", 1960, 3);
+    library.addBook("1984", "George Orwell", "Secker & Warburg", 1949, 2);
+    
+    // Search for a book
+    library.searchBook("To Kill a Mockingbird");
+    
+    // Borrow a book
+    library.borrowBook("The Great Gatsby");
+    
+    // Return a book
+    library.returnBook("The Great Gatsby");
+    
+    return 0;
+}
